@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widmogrod\Functional;
 
+/**
+ * @var callable
+ */
 const eql = 'Widmogrod\Functional\eql';
 
 /**
@@ -21,6 +24,9 @@ function eql($expected, $value = null)
     })(...func_get_args());
 }
 
+/**
+ * @var callable
+ */
 const lt = 'Widmogrod\Functional\lt';
 
 /**
@@ -38,7 +44,9 @@ function lt($expected, $value = null)
     })(...func_get_args());
 }
 
-
+/**
+ * @var callable
+ */
 const orr = 'Widmogrod\Functional\orr';
 
 /**
@@ -48,11 +56,52 @@ const orr = 'Widmogrod\Functional\orr';
  * @param callable|null $predicateB
  * @param mixed         $value
  *
- * @return mixed
+ * @return \Closure|bool
  */
 function orr(callable $predicateA, callable $predicateB = null, $value = null)
 {
     return curryN(3, function (callable $a, callable $b, $value) {
         return $a($value) || $b($value);
+    })(...func_get_args());
+}
+
+/**
+ * @var callable
+ */
+const andd = 'Widmogrod\Functional\andd';
+
+/**
+ * andd :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+ *
+ * @param callable      $predicateA
+ * @param callable|null $predicateB
+ * @param mixed         $value
+ *
+ * @return \Closure|bool
+ */
+function andd(callable $predicateA, callable $predicateB = null, $value = null)
+{
+    return curryN(3, function (callable $a, callable $b, $value) {
+        return $a($value) && $b($value);
+    })(...func_get_args());
+}
+
+/**
+ * @var callable
+ */
+const not = 'Widmogrod\Functional\andd';
+
+/**
+ * not :: (a -> Bool) -> a -> Bool
+ *
+ * @param callable      $predicate
+ * @param mixed         $value
+ *
+ * @return \Closure|bool
+ */
+function not(callable $predicate, $value = null)
+{
+    return curryN(2, function (callable $p, $value) {
+        return ! $p($value);
     })(...func_get_args());
 }

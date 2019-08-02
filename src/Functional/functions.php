@@ -280,7 +280,7 @@ const filter = 'Widmogrod\Functional\filter';
  * @param callable $predicate
  * @param Foldable $list
  *
- * @return Foldable
+ * @return Foldable|\Closure
  */
 function filter(callable $predicate, Foldable $list = null)
 {
